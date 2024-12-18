@@ -1,10 +1,22 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { produce } from 'immer';
 import _ from 'lodash';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/native';
 
 export default function TodoItem({ store, list, item, index }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedText, setEditedText] = useState(item.todo);
+
+  const handleSaveEdit = () => {
+    store(
+      produce(list, (draft) => {
+        draft[index].todo = editedText;
+      })
+    );
+    setIsEditing(false);
+  };
+
   return (
     <Item key={item.id}>
       <Check
@@ -18,7 +30,20 @@ export default function TodoItem({ store, list, item, index }) {
       >
         <CheckIcon>{item.done ? '☑' : '☐'}</CheckIcon>
       </Check>
-      <TodoItemText>{item.todo}</TodoItemText>
+
+      {isEditing ? (
+        <TextInput
+          value={editedText}
+          onChangeText={setEditedText}
+          onBlur={handleSaveEdit}
+          autoFocus
+        />
+      ) : (
+        <TodoItemText onPress={() => setIsEditing(true)}>
+          {item.todo}
+        </TodoItemText>
+      )}
+
       <TodoItemButton
         title="삭제"
         onPress={() => {
@@ -46,6 +71,14 @@ const CheckIcon = styled.Text`
 const TodoItemText = styled.Text`
   font-size: 20px;
   flex: 1;
+`;
+
+const TextInput = styled.TextInput`
+  font-size: 20px;
+  flex: 1;
+  background-color: #f0f0f0;
+  padding: 5px;
+  border-radius: 5px;
 `;
 
 const TodoItemButton = styled.Button``;
