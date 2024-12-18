@@ -9,7 +9,8 @@ import TodoItem from './TodoItem';
 
 const image = { uri: 'https://picsum.photos/1280/1280' };
 
-export default function DiaryInput({ navigation, store, list }) {
+export default function DiaryInput({ navigation, route }) {
+  const { store, list } = route.params;
   const [inputDate, setInputDate] = useState('');
   const [inputContent, setInputContent] = useState('');
   const inputDateRef = useRef(null);
@@ -31,7 +32,7 @@ export default function DiaryInput({ navigation, store, list }) {
     store([...list, newItem]);
     setInputDate('');
     setInputContent('');
-    navigation.navigate('다이어리 목록');
+    navigation.push('다이어리 목록');
   }, []);
 
   return (

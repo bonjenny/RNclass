@@ -2,23 +2,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { produce } from 'immer';
 import _ from 'lodash';
 import React from 'react';
+import { Button, NativeBaseProvider } from 'native-base';
 import styled from 'styled-components/native';
 
 export default function DiaryItem({ store, list, item, index }) {
   return (
     <Item key={item.id}>
-      <Check
+      <DiaryItemText
         onPress={() => {
-          store(
-            produce(list, (draft) => {
-              draft[index].done = !draft[index].done;
-            })
-          );
+          navigation.navigate('다이어리 상세', { item });
         }}
       >
-        <CheckIcon>{item.done ? '☑' : '☐'}</CheckIcon>
-      </Check>
-      <DiaryItemText>{item.todo}</DiaryItemText>
+        {item.date}
+      </DiaryItemText>
       <DiaryItemButton
         title="삭제"
         onPress={() => {
@@ -37,10 +33,6 @@ const Item = styled.View`
 
 const Check = styled.TouchableOpacity`
   margin-right: 4px;
-`;
-
-const CheckIcon = styled.Text`
-  font-size: 20px;
 `;
 
 const DiaryItemText = styled.Text`
