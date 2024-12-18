@@ -45,6 +45,5 @@ const styles = StyleSheet.create({
 const screenList = [
   { key: 'AddressSearch', title: '주소검색', link: 'AddressSearch' },
   { key: 'Diary', title: '다이어리 목록', link: '다이어리 목록' },
-  { key: 'Input', title: '다이어리 작성', link: '다이어리 작성' },
   { key: 'Currency', title: '환율 계산기', link: 'Currency' },
 ];

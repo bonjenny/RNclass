@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
+import { Button, NativeBaseProvider } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import styled from 'styled-components/native';
-import TodoInput from './TodoInput';
 import TodoItem from './TodoItem';
 
 const image = { uri: 'https://picsum.photos/1280/1280' };
@@ -27,16 +27,18 @@ export default function Diary({ navigation }) {
   };
 
   return (
-    <Container source={image} resizeMode="cover">
-      <KeyboardAvoidingView behavior={() => (Platform.OS === 'ios' ? 'padding' : 'height')}>
-        <Contents>
-          {list.map((item, index) => {
-            return <TodoItem key={item.id} store={store} list={list} item={item} index={index} />;
-          })}
-        </Contents>
-        <TodoInput store={store} list={list} />
-      </KeyboardAvoidingView>
-    </Container>
+    <NativeBaseProvider>
+      <Container source={image} resizeMode="cover">
+        <KeyboardAvoidingView behavior={() => (Platform.OS === 'ios' ? 'padding' : 'height')}>
+          <Contents>
+            {list.map((item, index) => {
+              return <TodoItem key={item.id} store={store} list={list} item={item} index={index} />;
+            })}
+          </Contents>
+          <Button onPress={() => navigation.navigate('다이어리 작성')}>새 일기 작성</Button>
+        </KeyboardAvoidingView>
+      </Container>
+    </NativeBaseProvider>
   );
 }
 
