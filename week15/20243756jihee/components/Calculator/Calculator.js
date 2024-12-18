@@ -3,19 +3,16 @@ import Constants from 'expo-constants';
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Platform, Text, TextInput, SafeAreaView, View, StyleSheet } from 'react-native';
-import { Button, NativeBaseProvider } from 'native-base';
 import styled from 'styled-components/native';
 import ChangeMoney from './ChangeMoney';
 
-export default function Calculator({ navigation, route }) {
+export default function Calculator() {
   return (
-    <NativeBaseProvider>
-      <Text>20243756 엄지희</Text>
       <SafeAreaView style={styles.container}>
+      <Text>20243756 엄지희</Text>
         <ChangeMoney />
         <StatusBar style="auto" />
       </SafeAreaView>
-    </NativeBaseProvider>
   );
 }
 
