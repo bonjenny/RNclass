@@ -1,16 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
-import React, { useEffect, useState, useRef } from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
 import styled from 'styled-components/native';
+import TodoInput from './TodoInput';
 import TodoItem from './TodoItem';
 
 const image = { uri: 'https://picsum.photos/1280/1280' };
 
 export default function Diary({ navigation }) {
   const [list, setList] = useState([]);
-  const [inputTodo, setInputTodo] = useState('');
-  const inputRef = useRef(null);
 
   useEffect(() => {
     AsyncStorage.getItem('list')
@@ -27,20 +26,6 @@ export default function Diary({ navigation }) {
     AsyncStorage.setItem('list', JSON.stringify(newList));
   };
 
-  const onPressHandler = () => {
-    if (inputTodo === '') {
-      return;
-    }
-    const newItem = {
-      id: `${inputTodo}_${new Date().getTime().toString()}`,
-      todo: inputTodo,
-      done: false,
-    };
-    store([...list, newItem]);
-    setInputTodo('');
-    inputRef.current.focus();
-  };
-
   return (
     <Container source={image} resizeMode="cover">
       <KeyboardAvoidingView behavior={() => (Platform.OS === 'ios' ? 'padding' : 'height')}>
@@ -49,10 +34,7 @@ export default function Diary({ navigation }) {
             return <TodoItem key={item.id} store={store} list={list} item={item} index={index} />;
           })}
         </Contents>
-        <InputContainer>
-          <Input ref={inputRef} value={inputTodo} onChangeText={(value) => setInputTodo(value)} onSubmitEditing={onPressHandler} />
-          <Button title="전송" onPress={onPressHandler} />
-        </InputContainer>
+        <TodoInput store={store} list={list} />
       </KeyboardAvoidingView>
     </Container>
   );
@@ -71,15 +53,3 @@ const Contents = styled.ScrollView`
   flex: 1;
   padding: 8px 24px;
 `;
-
-const InputContainer = styled.View`
-  flex-direction: row;
-  padding: 8px 24px;
-`;
-
-const Input = styled.TextInput`
-  border: 1px solid #e5e5e5;
-  flex: 1;
-`;
-
-const Button = styled.Button``;
