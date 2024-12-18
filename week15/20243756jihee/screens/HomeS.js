@@ -46,4 +46,5 @@ const screenList = [
   { key: 'AddressSearch', title: '주소검색', link: 'AddressSearch' },
   { key: 'Diary', title: '다이어리 목록', link: '다이어리 목록' },
   { key: 'Calculator', title: '환율 계산기', link: '환율 계산기' },
+  { key: 'Todo', title: 'Todo', link: 'Todo' },
 ];

@@ -33,7 +33,7 @@ const InputContainer = styled.View`
 `;
 
 const Input = styled.TextInput`
-  border: 1px solid #e5e5e5;
+  border: 3px solid red;
   flex: 1;
 `;
 

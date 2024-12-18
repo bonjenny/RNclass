@@ -8,6 +8,7 @@ import Diary from './components/Diary/Diary';
 import DiaryInput from './components/Diary/DiaryInput';
 import DiaryDetail from './components/Diary/DiaryDetail';
 import Calculator from './components/Calculator/Calculator';
+import Todo from './components/Todo/Todo';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -21,6 +22,7 @@ export default function App() {
         <Stack.Screen name="다이어리 작성" component={DiaryInput} />
         <Stack.Screen name="다이어리 상세" component={DiaryDetail} />
         <Stack.Screen name="환율 계산기" component={Calculator} />
+        <Stack.Screen name="Todo" component={Todo} />
       </Stack.Navigator>
     </NavigationContainer>
   );
