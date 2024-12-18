@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 
 const image = { uri: 'https://picsum.photos/1280/1280' };
 
-export default function Currecy({ navigation }) {
+export default function Currency({ navigation }) {
   return (
     <Container source={image} resizeMode="cover">
     </Container>

@@ -7,9 +7,7 @@ import styled from 'styled-components/native';
 export default function HomeS({ navigation }) {
   return (
     <NativeBaseProvider>
-      <View>
-        <Text>20243756 엄지희</Text>
-      </View>
+      <Text>20243756 엄지희</Text>
       <ScrollView style={{ height: 150 }}>
         {screenList.map((screen) => (
           <Button
@@ -39,13 +37,14 @@ const styles = StyleSheet.create({
   Diary: {
     backgroundColor: 'green'
   },
-  Currecy: {
+  Currency: {
     backgroundColor: 'purple'
   }  
 });
 
 const screenList = [
   { key: 'AddressSearch', title: '주소검색', link: 'AddressSearch' },
-  { key: 'Diary', title: '일기', link: '다이어리 목록' },
-  { key: 'Currecy', title: '환율 계산기', link: 'Currecy' },
+  { key: 'Diary', title: '다이어리 목록', link: '다이어리 목록' },
+  { key: 'Input', title: '다이어리 작성', link: '다이어리 작성' },
+  { key: 'Currency', title: '환율 계산기', link: 'Currency' },
 ];
