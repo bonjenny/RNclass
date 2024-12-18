@@ -1,42 +1,87 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
-import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { Platform, ScrollView, Button, Text, TextInput, View, StyleSheet } from 'react-native';
-import { NativeBaseProvider } from 'native-base';
+import React, { useState } from 'react';
+import { Platform, Button, Text, TextInput, View, StyleSheet, Alert } from 'react-native';
 import styled from 'styled-components/native';
-import RequestChangeMoney from '../api/RequestChangeMoney';
-import newDate from '../Util/Date';
 
-const ItemBox = styled.View`
+export default function ChangeMoney({ navigation }) {
+  const [exchangeRate, setExchangeRate] = useState('');
+  const [thbAmount, setThbAmount] = useState('');
+  const [convertedAmount, setConvertedAmount] = useState(null);
+
+  const handleConvert = () => {
+    if (!thbAmount) {
+      alert('입력 오류', '변환할 바트 금액을 입력해주세요.');
+      return;
+    }
+
+    if (!exchangeRate) {
+      alert('입력 오류', '환율을 입력해주세요.');
+      return;
+    }
+
+    const converted = parseFloat(thbAmount) * parseFloat(exchangeRate);
+    setConvertedAmount(converted.toFixed(2));
+  };
+
+  const handleReset = () => {
+    setThbAmount('');
+    setConvertedAmount(null);
+    setExchangeRate('');
+    AsyncStorage.removeItem('exchangeRate');
+  };
+
+  return (
+    <Container resizeMode="cover">
+      <Header>
+        <HeaderText>20243756 엄지희</HeaderText>
+      </Header>
+
+      <TextInputContainer>
+        <TextInput
+          style={styles.textInput}
+          placeholder="오늘의 환율 (THB -> KRW)"
+          value={exchangeRate}
+          onChangeText={(value) => setExchangeRate(value)}
+          keyboardType="numeric"
+        />
+        <Text>THB -{'>'} KRW</Text>
+      </TextInputContainer>
+
+      <TextInputContainer>
+        <TextInput
+          style={styles.textInput}
+          placeholder="변환할 바트 금액 입력"
+          value={thbAmount}
+          onChangeText={(value) => setThbAmount(value)}
+          keyboardType="numeric"
+        />
+      </TextInputContainer>
+
+      <ButtonContainer>
+        <Button title="환전" onPress={handleConvert} />
+        <Button title="초기화" onPress={handleReset} color="red" />
+      </ButtonContainer>
+
+      {convertedAmount && (
+        <Result>
+          <Text>환산된 원화 금액: {convertedAmount} 원</Text>
+        </Result>
+      )}
+    </Container>
+  );
+}
+
+const Container = styled.SafeAreaView`
   flex: 1;
+  padding-top: ${Constants.statusBarHeight}px;
   align-items: center;
-  flex-direction: row;
-  height: 25px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 10px;
-`;
-
-const MoneyName = styled.Text`
-  font-weight: bold;
-  margin-right: 10px;
-`;
-
-const Money = styled.Text`
-  padding-left: 10px;
-`;
-
-const MoneyType = styled.Text`
-  font-size: 11px;
-  padding-left: 3px;
 `;
 
 const Header = styled.View`
-  flex: 1;
-  height: 60px;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  padding: 10px;
+  align-items: flex-start;
 `;
 
 const HeaderText = styled.Text`
@@ -45,109 +90,29 @@ const HeaderText = styled.Text`
 `;
 
 const TextInputContainer = styled.View`
-  flex: 1;
   flex-direction: row;
-  padding-left: 20px;
-  padding-right: 20px;
-`;
-
-const TextInputText = styled.TextInput`
-  background-color: silver;
-  flex: 2;
-  height: 40px;
-  padding-left: 10px;
-`;
-
-const TextExplainView = styled.View`
-  flex: 1;
-  background-color: silver;
-  height: 40px;
-  justify-content: center;
   align-items: center;
-  padding-right: 10px;
+  margin-bottom: 10px;
+  width: 80%;
 `;
 
-const TextExplain = styled.Text`
-  font-size: 11px;
-  color: black;
+const ButtonContainer = styled.View`
+  flex-direction: row;
+  margin-top: 20px;
+  justify-content: space-evenly;
+  width: 80%;
 `;
 
-export default function ChangeMoney({ navigation, route }) {
-  const [moneyList, setMoneyList] = useState([]);
-  const [keyword, setKeyword] = useState(1);
-  const [pressBoolean, setPressBoolean] = useState(false);
+const Result = styled.View`
+  margin-top: 20px;
+`;
 
-  useEffect(() => {
-    async function start() {
-      const resultData = await RequestChangeMoney(newDate);
-      if (!resultData) {
-        console.log('error');
-      } else {
-        console.log(resultData.data);
-        setMoneyList(resultData.data);
-      }
-    }
-    start();
-  }, []);
-
-  const handlerBtn = () => {
-    setPressBoolean(!pressBoolean);
-  };
-
-  return (
-    <ScrollView>
-      <Header>
-        <HeaderText>환율 계산</HeaderText>
-      </Header>
-      <TextInputContainer>
-        <TextInputText
-          value={keyword}
-          onChangeText={(text) => {
-            setKeyword(text);
-            setPressBoolean(false);
-          }}
-        />
-        <TextExplainView>
-          <TextExplain>THB</TextExplain>
-        </TextExplainView>
-        <Button
-          title="환전"
-          onPress={() => {
-            handlerBtn();
-          }}
-        />
-      </TextInputContainer>
-      <View>
-        {pressBoolean
-          ? moneyList.map((item, index) => {
-              return item.cur_nm === '태국 바트' ? (
-                <ItemBox key={index}>
-                  <MoneyName>{item.cur_nm}</MoneyName>
-                  <Text>{keyword}</Text>
-                  <MoneyType>{item.cur_unit}</MoneyType>
-                  <Money>{(item.deal_bas_r.replace(/,/g, '') * keyword).toFixed(0)}</Money>
-                  <MoneyType>원</MoneyType>
-                </ItemBox>
-              ) : (
-                ''
-              );
-            })
-          : ''}
-      </View>
-      <Header>
-        <HeaderText>환율(기준날짜:{newDate})</HeaderText>
-      </Header>
-      {moneyList.map((item, index) => {
-        return item.cur_nm === '한국 원' ? (
-          ''
-        ) : (
-          <ItemBox key={index + 50}>
-            <MoneyName>{item.cur_nm}</MoneyName>
-            <MoneyType>{item.cur_unit}</MoneyType>
-            <Money>{item.deal_bas_r}원</Money>
-          </ItemBox>
-        );
-      })}
-    </ScrollView>
-  );
-}
+const styles = StyleSheet.create({
+  textInput: {
+    backgroundColor: 'silver',
+    flex: 1,
+    height: 40,
+    paddingLeft: 10,
+    marginRight: 10,
+  },
+});
