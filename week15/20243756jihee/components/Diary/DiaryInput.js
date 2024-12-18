@@ -22,6 +22,14 @@ export default function DiaryInput({ navigation, route }) {
 
   const onSaveHandler = () => {
     if (inputDate === '') {
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더해줍니다.
+      const dd = String(today.getDate()).padStart(2, '0'); // 하루 전날 숫자는 한 자리일 수 있으므로 두 자리로 맞추기
+      setInputDate(`${yyyy}-${mm}-${dd}`); // yyyy-MM-dd 형식으로 날짜를 설정
+    }
+    if (inputContent === '') {
+      alert('내용을 입력해주세요!');
       return;
     }
     const newItem = {
@@ -47,7 +55,7 @@ export default function DiaryInput({ navigation, route }) {
             </InputContainer>
             <Title>내용</Title>
             <InputContainer style={{ height: '300px' }}>
-              <Input ref={inputContentRef} value={inputContent} onChangeText={(value) => setInputContent(value)} />
+              <Input ref={inputContentRef} value={inputContent} multiline onChangeText={(value) => setInputContent(value)} />
             </InputContainer>
             <Button onPress={onSaveHandler}>저장</Button>
           </Contents>

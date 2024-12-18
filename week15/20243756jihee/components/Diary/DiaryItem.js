@@ -5,12 +5,12 @@ import React from 'react';
 import { Button, NativeBaseProvider } from 'native-base';
 import styled from 'styled-components/native';
 
-export default function DiaryItem({ store, list, item, index }) {
+export default function DiaryItem({ navigation, store, list, item, index }) {
   return (
     <Item key={item.id}>
       <DiaryItemText
         onPress={() => {
-          navigation.replace('다이어리 상세', { item });
+          navigation.replace('다이어리 상세', { store, list, item, index });
         }}
       >
         {item.date}

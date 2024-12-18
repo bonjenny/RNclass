@@ -33,7 +33,7 @@ export default function Diary({ navigation }) {
         <KeyboardAvoidingView behavior={() => (Platform.OS === 'ios' ? 'padding' : 'height')}>
           <Contents>
             {list.map((item, index) => {
-              return <DiaryItem key={item.id} store={store} list={list} item={item} index={index} />;
+              return <DiaryItem key={item.id} navigation={navigation} store={store} list={list} item={item} index={index} />;
             })}
           </Contents>
           <Button onPress={() => navigation.navigate('다이어리 작성', { store, list })}>새 일기 작성</Button>
