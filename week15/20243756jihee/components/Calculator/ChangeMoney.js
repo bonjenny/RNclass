@@ -15,6 +15,7 @@ const ItemBox = styled.View`
   height: 25px;
   padding-left: 20px;
   padding-right: 20px;
+  padding-top: 10px;
 `;
 
 const MoneyName = styled.Text`
