@@ -24,6 +24,7 @@ export default function DiaryDetail({ navigation, route }) {
               onPress={() => {
                 store(_.reject(list, (element) => element.id === item.id));
                 alert('삭제되었습니다!');
+                navigation.replace('다이어리 목록');
               }}
             />
           </Contents>
