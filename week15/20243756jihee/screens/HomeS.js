@@ -33,19 +33,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#7eb0ee',
     fontWeight: '15px'
   },
-  addressSearch: {
+  AddressSearch: {
     backgroundColor: 'blue',
   },
-  diary: {
+  Diary: {
     backgroundColor: 'green'
   },
-  currency: {
+  Currecy: {
     backgroundColor: 'purple'
   }  
 });
 
 const screenList = [
-  { key: 'addressSearch', title: '주소검색', link: 'AddressSearch' },
-  { key: 'diary', title: '일기', link: 'Diary' },
-  { key: 'currency', title: '환율 계산기', link: 'Currecy' },
+  { key: 'AddressSearch', title: '주소검색', link: 'AddressSearch' },
+  { key: 'Diary', title: '일기', link: '다이어리 목록' },
+  { key: 'Currecy', title: '환율 계산기', link: 'Currecy' },
 ];
