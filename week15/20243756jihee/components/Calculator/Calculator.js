@@ -8,11 +8,11 @@ import ChangeMoney from './ChangeMoney';
 
 export default function Calculator() {
   return (
-      <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>20243756 엄지희</Text>
-        <ChangeMoney />
-        <StatusBar style="auto" />
-      </SafeAreaView>
+      <ChangeMoney />
+      <StatusBar style="auto" />
+    </SafeAreaView>
   );
 }
 
