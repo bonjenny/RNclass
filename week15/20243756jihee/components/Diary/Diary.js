@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 import TodoItem from './TodoItem';
+import DiaryItem from './DiaryItem';
 
 const image = { uri: 'https://picsum.photos/1280/1280' };
 
@@ -32,10 +33,10 @@ export default function Diary({ navigation }) {
         <KeyboardAvoidingView behavior={() => (Platform.OS === 'ios' ? 'padding' : 'height')}>
           <Contents>
             {list.map((item, index) => {
-              return <TodoItem key={item.id} store={store} list={list} item={item} index={index} />;
+              return <DiaryItem key={item.id} store={store} list={list} item={item} index={index} />;
             })}
           </Contents>
-          <Button onPress={() => navigation.navigate('다이어리 작성')}>새 일기 작성</Button>
+          <Button onPress={() => navigation.navigate('다이어리 작성', { store, list })}>새 일기 작성</Button>
         </KeyboardAvoidingView>
       </Container>
     </NativeBaseProvider>

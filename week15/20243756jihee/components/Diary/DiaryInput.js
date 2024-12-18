@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Platform, Text, TextInput } from 'react-native';
 import { Button, NativeBaseProvider } from 'native-base';
 import styled from 'styled-components/native';
@@ -9,12 +9,29 @@ import TodoItem from './TodoItem';
 
 const image = { uri: 'https://picsum.photos/1280/1280' };
 
-export default function DiaryInput({ navigation }) {
+export default function DiaryInput({ navigation, store, list }) {
   const [inputDate, setInputDate] = useState('');
   const [inputContent, setInputContent] = useState('');
+  const inputDateRef = useRef(null);
+  const inputContentRef = useRef(null);
+
+  useEffect(() => {
+    inputDateRef.current.focus();
+  }, []);
 
   const onSaveHandler = useCallback(() => {
-    navigation.navigate('다이어리 작성');
+    if (inputDate === '') {
+      return;
+    }
+    const newItem = {
+      id: new Date().getTime().toString(),
+      date: inputDate,
+      content: inputContent,
+    };
+    store([...list, newItem]);
+    setInputDate('');
+    setInputContent('');
+    navigation.navigate('다이어리 목록');
   }, []);
 
   return (
@@ -25,11 +42,11 @@ export default function DiaryInput({ navigation }) {
           <Contents>
             <Title>날짜</Title>
             <InputContainer style={{ height: '100px' }}>
-              <Input value={inputDate} onChangeText={(value) => setInputDate(value)} />
+              <Input ref={inputDateRef} value={inputDate} onChangeText={(value) => setInputDate(value)} />
             </InputContainer>
             <Title>내용</Title>
             <InputContainer style={{ height: '300px' }}>
-              <Input value={inputContent} onChangeText={(value) => setInputContent(value)} />
+              <Input ref={inputContentRef} value={inputContent} onChangeText={(value) => setInputContent(value)} />
             </InputContainer>
             <Button onPress={onSaveHandler}>저장</Button>
           </Contents>
@@ -67,5 +84,3 @@ const Input = styled.TextInput`
   border: 1px solid #e5e5e5;
   flex: 1;
 `;
-
-const Button = styled.Button``;
