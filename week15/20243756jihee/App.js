@@ -7,7 +7,7 @@ import AddressSearch from './components/AddressSearch';
 import Diary from './components/Diary/Diary';
 import DiaryInput from './components/Diary/DiaryInput';
 import DiaryDetail from './components/Diary/DiaryDetail';
-import Currency from './components/Currency';
+import Calculator from './components/Calculator/Calculator';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -20,7 +20,7 @@ export default function App() {
         <Stack.Screen name="다이어리 목록" component={Diary} />
         <Stack.Screen name="다이어리 작성" component={DiaryInput} />
         <Stack.Screen name="다이어리 상세" component={DiaryDetail} />
-        <Stack.Screen name="Currency" component={Currency} />
+        <Stack.Screen name="환율 계산기" component={Calculator} />
       </Stack.Navigator>
     </NavigationContainer>
   );

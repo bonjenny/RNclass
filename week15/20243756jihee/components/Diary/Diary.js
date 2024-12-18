@@ -4,10 +4,7 @@ import { Button, NativeBaseProvider } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import styled from 'styled-components/native';
-import TodoItem from './TodoItem';
 import DiaryItem from './DiaryItem';
-
-const image = { uri: 'https://picsum.photos/1280/1280' };
 
 export default function Diary({ navigation }) {
   const [list, setList] = useState([]);
@@ -29,7 +26,7 @@ export default function Diary({ navigation }) {
 
   return (
     <NativeBaseProvider>
-      <Container source={image} resizeMode="cover">
+      <Container resizeMode="cover">
         <KeyboardAvoidingView behavior={() => (Platform.OS === 'ios' ? 'padding' : 'height')}>
           <Contents>
             {list.map((item, index) => {

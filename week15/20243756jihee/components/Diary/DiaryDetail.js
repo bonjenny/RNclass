@@ -5,14 +5,13 @@ import { z } from 'react';
 import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 
-const image = { uri: 'https://picsum.photos/1280/1280' };
 
 export default function DiaryDetail({ navigation, route }) {
   const { store, list, item, index } = route.params;
 
   return (
     <NativeBaseProvider>
-      <Container source={image} resizeMode="cover">
+      <Container resizeMode="cover">
         <Text>{item.date}</Text>
         <KeyboardAvoidingView behavior={() => (Platform.OS === 'ios' ? 'padding' : 'height')}>
           <Contents>

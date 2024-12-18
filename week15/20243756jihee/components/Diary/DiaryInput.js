@@ -4,10 +4,8 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Platform, Text, TextInput } from 'react-native';
 import { Button, NativeBaseProvider } from 'native-base';
 import styled from 'styled-components/native';
-import TodoInput from './TodoInput';
-import TodoItem from './TodoItem';
 
-const image = { uri: 'https://picsum.photos/1280/1280' };
+
 
 export default function DiaryInput({ navigation, route }) {
   const { store, list } = route.params;
@@ -44,7 +42,7 @@ export default function DiaryInput({ navigation, route }) {
 
   return (
     <NativeBaseProvider>
-      <Container source={image} resizeMode="cover">
+      <Container resizeMode="cover">
         <Text>20243756 엄지희</Text>
         <KeyboardAvoidingView behavior={() => (Platform.OS === 'ios' ? 'padding' : 'height')}>
           <Contents>

@@ -3,11 +3,10 @@ import { SafeAreaView, Text, View, Button, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import styled from 'styled-components/native';
 
-const image = { uri: 'https://picsum.photos/1280/1280' };
 
 export default function AddressSearch({ navigation }) {
   return (
-    <Container source={image} resizeMode="cover">
+    <Container resizeMode="cover">
     </Container>
   );
 }
