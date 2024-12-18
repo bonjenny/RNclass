@@ -10,17 +10,17 @@ export default function ChangeMoney({ navigation }) {
   const [convertedAmount, setConvertedAmount] = useState(null);
 
   const handleConvert = () => {
-    if (!thbAmount) {
-      alert('입력 오류', '변환할 바트 금액을 입력해주세요.');
+    if (isNaN(thbAmount)) {
+      alert('입력 오류', '변환할 바트 금액을 정확히 입력해주세요.');
       return;
     }
 
-    if (!exchangeRate) {
-      alert('입력 오류', '환율을 입력해주세요.');
+    if (isNaN(exchangeRate)) {
+      alert('입력 오류', '환율을 정확히 입력해주세요.');
       return;
     }
 
-    const converted = parseFloat(thbAmount) * parseFloat(exchangeRate);
+    const converted = thbAmount * exchangeRate;
     setConvertedAmount(converted.toFixed(2));
   };
 
