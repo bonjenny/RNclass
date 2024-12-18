@@ -10,7 +10,7 @@ export default function DiaryItem({ store, list, item, index }) {
     <Item key={item.id}>
       <DiaryItemText
         onPress={() => {
-          navigation.navigate('다이어리 상세', { item });
+          navigation.replace('다이어리 상세', { item });
         }}
       >
         {item.date}

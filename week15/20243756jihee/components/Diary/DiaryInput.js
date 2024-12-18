@@ -20,7 +20,7 @@ export default function DiaryInput({ navigation, route }) {
     inputDateRef.current.focus();
   }, []);
 
-  const onSaveHandler = useCallback(() => {
+  const onSaveHandler = () => {
     if (inputDate === '') {
       return;
     }
@@ -32,8 +32,8 @@ export default function DiaryInput({ navigation, route }) {
     store([...list, newItem]);
     setInputDate('');
     setInputContent('');
-    navigation.push('다이어리 목록');
-  }, []);
+    navigation.replace('다이어리 목록');
+  };
 
   return (
     <NativeBaseProvider>
