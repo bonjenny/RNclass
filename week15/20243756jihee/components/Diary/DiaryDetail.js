@@ -23,6 +23,7 @@ export default function DiaryDetail({ navigation, route }) {
               title="삭제"
               onPress={() => {
                 store(_.reject(list, (element) => element.id === item.id));
+                alert('삭제되었습니다!');
               }}
             />
           </Contents>
