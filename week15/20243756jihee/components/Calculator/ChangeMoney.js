@@ -34,7 +34,7 @@ export default function ChangeMoney({ navigation }) {
   return (
     <Container resizeMode="cover">
       <Header>
-        <HeaderText>20243756 엄지희</HeaderText>
+        <HeaderText>오늘의 환율 계산기</HeaderText>
       </Header>
 
       <TextInputContainer>
